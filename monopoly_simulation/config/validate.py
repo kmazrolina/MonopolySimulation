@@ -1,6 +1,8 @@
 import yaml
 
 
+
+
 def validate_config(config_path: str) -> dict:
     """
     Validates the configuration parameters for the Monopoly simulation.
@@ -22,6 +24,10 @@ def validate_config(config_path: str) -> dict:
         "tax_fields", "chance_fields", "property_fields"
     ]
 
+    required_boolean = [
+        "train_agent"
+    ]
+
     for required_fields in [required_positive_ints, required_non_negative_ints]:
         for key in required_fields:
             if key not in config:
@@ -39,6 +45,12 @@ def validate_config(config_path: str) -> dict:
         if not isinstance(value, int) or value < 0:
             raise ValueError(f"Invalid '{key}': must be a non-negative integer.")
 
+    # Validate boolean values
+    for key in required_boolean:
+        value = config.get(key)
+        if not isinstance(value, bool):
+            raise ValueError(f"Invalid '{key}': must be a boolean value.")
+
     # Validate that total fields do not exceed board size
     total_fields = sum(config.get(k, 0) for k in required_non_negative_ints)
     if total_fields > config["board_size"]:
@@ -47,7 +59,7 @@ def validate_config(config_path: str) -> dict:
         )
 
     # Validate chance events
-    chance_events = config.get("chance_events", [])
+    chance_events = config.get("chance_events")
     if not chance_events:
         raise ValueError("No chance events defined in the configuration.")
     for event in chance_events:
@@ -55,7 +67,14 @@ def validate_config(config_path: str) -> dict:
             raise ValueError(f"Invalid action '{event["action"]}' in chance events.")
         if not isinstance(event["amount"], int):
             raise ValueError(f"Invalid value '{event["amount"]}' in chance events, must an integer.")
-        
+
+    # Vaidate player type
+    player_type = config.get("player", "always_buy")
+    if player_type not in ["always_buy", "intelligent", "never_buy"]:
+        raise ValueError(f"Invalid player type '{player_type}'. Must be one of 'always_buy', 'intelligent', or 'never_buy'.")
+
+
+
     print("Configuration validation successful.")
     return config
 

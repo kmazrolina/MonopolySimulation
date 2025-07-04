@@ -1,48 +1,50 @@
 board_size: 20
 chance_fields: 4
 chance_events:
-  - title: "Collect $100."
-    description: "You found a treasure! Collect $100."
-    action: "receive"
+  - title: Collect $100.
+    description: You found a treasure! Collect $100.
+    action: receive
     amount: 100
 
-  - title: "Pay $150."
-    description: "You lost a bet. Pay $150."
-    action: "pay"
+  - title: Pay $150.
+    description: You lost a bet. Pay $150.
+    action: pay
     amount: 150
 
-  - title: "Go back 3 spaces."
-    description: "You tripped! Move back 3 spaces."
-    action: "move"
+  - title: Go back 3 spaces.
+    description: You tripped! Move back 3 spaces.
+    action: move
     amount: -3
 
-  - title: "Advance 5 spaces."
-    description: "Hitch a ride! Move forward 5 spaces."
-    action: "move"
+  - title: Advance 5 spaces.
+    description: Hitch a ride! Move forward 5 spaces.
+    action: move
     amount: 5
 
-  - title: "Pay $50."
-    description: "You've gone shopping! Pay $50."
-    action: "pay"
+  - title: Pay $50.
+    description: You've gone shopping! Pay $50.
+    action: pay
     amount: 50
 
-  - title: "Collect $200."
-    description: "Bank error in your favor. Collect $200."
-    action: "receive"
+  - title: Collect $200.
+    description: Bank error in your favor. Collect $200.
+    action: receive
     amount: 200
 
-  - title: "Skip next turn."
-    description: "Injury! Skip your next turn."
-    action: "skip"
+  - title: Skip next turn.
+    description: Injury! Skip your next turn.
+    action: skip
     amount: 0
 die_faces: 6
 max_turns: 250
+player_type: intelligent   # Options: always_buy, never_buy, intelligent
 property_fields: 12
 property_price: 250
 property_rent: 50
-start_cash: 2000
+start_cash: 1000
 tax_fields: 3
 tax_amount: 75
+train_agent: true
 
 
 
