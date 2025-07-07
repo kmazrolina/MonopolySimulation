@@ -37,7 +37,7 @@ chance_events:
     amount: 0
 die_faces: 6
 max_turns: 250
-player_type: intelligent   # Options: always_buy, never_buy, intelligent
+player_type: qlearning   # Options: always_buy, never_buy, qlearning
 property_fields: 12
 property_price: 250
 property_rent: 50

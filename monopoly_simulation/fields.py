@@ -22,6 +22,6 @@ class PropertyField(Field):
         self.name = name
         self.price = price
         self.rent = rent
-        self.owner = None
+        self.is_owned = False
         super().__init__( "Property")
 

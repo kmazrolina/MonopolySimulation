@@ -30,8 +30,12 @@ class Board:
             self.fields[position] = ChanceField(chance_event=random.choice(self.config.chance_events))  
             position += 1
 
-        for _ in range(property_fields):
-            property_name = randomname.get_name(noun=( 'geography', 'houses', 'buildings', 'fast_food')).replace("-", " ").title()
+        property_names = [
+            randomname.get_name(
+                noun=( 'geography', 'houses', 'buildings', 'fast_food'), 
+                seed=seed
+                ).replace("-", " ").title() for seed in range(property_fields)]
+        for property_name in property_names:
             property_price = self.config.property_price
             property_rent = self.config.property_rent
             self.fields[position] = PropertyField(property_name, property_price, property_rent)
@@ -44,5 +48,11 @@ class Board:
     def get_field(self, index):
         if 0 <= index < self.config.board_size:
             return self.fields[index]
+        else:
+            raise IndexError("Index out of bounds for board fields.")
+        
+    def set_field(self, index, field):
+        if 0 <= index < self.config.board_size:
+            self.fields[index] = field
         else:
             raise IndexError("Index out of bounds for board fields.")

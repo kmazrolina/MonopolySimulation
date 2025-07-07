@@ -1,8 +1,5 @@
 import yaml
 
-
-
-
 def validate_config(config_path: str) -> dict:
     """
     Validates the configuration parameters for the Monopoly simulation.
@@ -70,8 +67,8 @@ def validate_config(config_path: str) -> dict:
 
     # Vaidate player type
     player_type = config.get("player", "always_buy")
-    if player_type not in ["always_buy", "intelligent", "never_buy"]:
-        raise ValueError(f"Invalid player type '{player_type}'. Must be one of 'always_buy', 'intelligent', or 'never_buy'.")
+    if player_type not in ["always_buy", "qlearning", "never_buy"]:
+        raise ValueError(f"Invalid player type '{player_type}'. Must be one of 'always_buy', 'qlearning', or 'never_buy'.")
 
 
 
