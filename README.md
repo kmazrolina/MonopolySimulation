@@ -2,10 +2,12 @@
 
 This is a Python project that simulates the classic board game Monopoly in single player version. It models player actions, property transactions, and game mechanics to analyze strategies and outcomes. 
 
+Full project documentation is available in [wiki](https://github.com/kmazrolina/MonopolySimulation/wiki).
+
 ## Quick start
 Clone this repository:
 ```bash
-git clone 
+git clone https://github.com/kmazrolina/MonopolySimulation
 ```
 Install:
 ```bash
@@ -20,7 +22,8 @@ Open http://localhost:8502/ in your browser.
 Configure simulation and run.
 
 
-**Run experiments**
+**Running experiments**
+
 Running comparative experiments across 10000 games (might take a few minutes).
 
 ```bash
@@ -33,13 +36,7 @@ compare-start-cash # Compare starting cash amount 1000, 1500, 2000$
 ```
 After running command open http://localhost:8502/ in your browser to start running the comparison.
 
-
-
-
-
-
-```
-
+Full information about experiment results [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/Comparative-Experiments)
 
 ## Simulation Rules
 
@@ -85,4 +82,6 @@ After running command open http://localhost:8502/ in your browser to start runni
 - Always Buy - always buys unowned properties
 - Never Buy - never buys unowned properties
 - QLearning - learns when to buy properties to maximize total worth and number of wins
+More information on the learning process [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/QLearning-Agent)
+
 

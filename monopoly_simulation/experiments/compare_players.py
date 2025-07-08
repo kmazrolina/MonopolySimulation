@@ -74,8 +74,8 @@ def main():
 
     simulations, simulations_info_df = setup_simulations(config, args)
     
-    st.set_page_config(page_title="Reward Strategy Comparison Report", page_icon=":money_with_wings:")
-    st.title("Reward Strategy Comparison Report")
+    st.set_page_config(page_title="Player Type Comparison Report", page_icon=":money_with_wings:")
+    st.title("Player Type Comparison Report")
 
     running_info = st.empty()
     running_info.info(f"Running {args.num_games} games for player types: {args.player_options}...")
