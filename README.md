@@ -4,8 +4,9 @@ This is a Python project that simulates the classic board game Monopoly in singl
 
 Full project documentation is available in [wiki 📖](https://github.com/kmazrolina/MonopolySimulation/wiki).
 
+![simulation run](pic/simulation_run.png)
 
-![simulation_run](pic/simulation_run.png)
+
 
 ## Quick start
 Clone this repository:
