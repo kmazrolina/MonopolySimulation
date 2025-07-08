@@ -5,13 +5,12 @@ This script initializes the Streamlit app, sets up session state, and creates ta
 
 import streamlit as st
 
-from gui.session_state_init import init_session_state
-from gui.config_form import render_config_form
-from gui.runtime import render_simulation_display
+from monopoly_simulation.gui.session_state_init import init_session_state
+from monopoly_simulation.gui.config_form import render_config_form
+from monopoly_simulation.gui.runtime import render_simulation_display
 
 
-
-if __name__ == "__main__":
+def main():
     st.set_page_config(
         page_title="Monopoly Simulation",
         page_icon=":money_with_wings:",
@@ -26,4 +25,8 @@ if __name__ == "__main__":
         render_config_form()
     else:
         render_simulation_display()
+
+if __name__ == "__main__":
+    main()
+    
     

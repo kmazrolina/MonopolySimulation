@@ -35,7 +35,7 @@ class Player:
 
 
 class QLearningPlayer(Player):
-    def __init__(self, alpha=0.1, gamma=0.9, epsilon=0.1, reward_strategy='sparse', start_cash=2000):
+    def __init__(self, alpha=0.1, gamma=0.9, epsilon=0.1, reward_strategy='mixed', start_cash=2000):
         self.q_table = defaultdict(float)
         self.alpha = alpha
         self.gamma = gamma
@@ -161,7 +161,7 @@ class QLearningPlayer(Player):
         This method is called when the player wins the game.
         It can be used to update the Q-table or perform any other actions needed upon winning.
         """
-        should_update = True if not self.eval and self.reward_strategy != 'sparse' else False
+        should_update = True if not self.eval and self.reward_strategy != 'dense' else False
         if should_update:
             state = self.State( None, self.cash, 0, self.properties)
             reward = self.reward_win_factor * self.cash + sum([prop.price for prop in self.properties])  
@@ -204,3 +204,17 @@ class NeverBuyPlayer(Player):
           
     def buy_property(self, property, turns_left=None):
         return False
+    
+    
+def create_player_from_type(player_type, start_cash=2000, **kwargs):
+    """
+    Factory function to create a player instance based on the player type.
+    """
+    if player_type == "always_buy":
+        return AlwaysBuyPlayer(cash=start_cash)
+    elif player_type == "never_buy":
+        return NeverBuyPlayer(cash=start_cash)
+    elif player_type == "qlearning":
+        return QLearningPlayer(start_cash=start_cash, **kwargs)
+    else:
+        raise ValueError(f"Unknown player type: {player_type}")

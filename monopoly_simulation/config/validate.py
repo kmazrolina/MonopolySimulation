@@ -1,5 +1,6 @@
 import yaml
 
+
 def validate_config(config_path: str) -> dict:
     """
     Validates the configuration parameters for the Monopoly simulation.
@@ -74,6 +75,8 @@ def validate_config(config_path: str) -> dict:
 
     print("Configuration validation successful.")
     return config
+
+
 
 if __name__ == "__main__":
     validate_config("default_config.yaml")

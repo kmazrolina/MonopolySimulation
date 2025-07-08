@@ -2,10 +2,10 @@ import time
 import streamlit as st
 
 
-from simualtion import Simulation
-from player import AlwaysBuyPlayer, NeverBuyPlayer, QLearningPlayer
-from gui.board_display import render_html_board_with_game
-from gui.statistics import display_cumulative_stats, update_win_loose_stats, get_owned_properties
+from monopoly_simulation.simualtion import Simulation
+from monopoly_simulation.player import create_player_from_type
+from monopoly_simulation.gui.board_display import render_html_board_with_game
+from monopoly_simulation.gui.statistics import display_cumulative_stats, update_win_loose_stats, get_owned_properties
 
 
 def run_simulations(num_games=100):
@@ -184,7 +184,6 @@ def display_simulation_runtime_info():
     # Display the current simulation title
     st.write("#### Current Simulation: ", st.session_state.simulation_title)
     
-    
     # Display the player type
     st.write("Player Type: ", st.session_state.simulation_config.player_type)
 
@@ -197,18 +196,15 @@ def initialize_simulation():
     # Create a player
     config.player_type = config.player_type.lower().replace(" ", "_")
     print(f"Creating player of type: {config.player_type}")
-    if config.player_type == "always_buy":
-        player = AlwaysBuyPlayer(config.start_cash) 
-    elif config.player_type == "never_buy":
-        player = NeverBuyPlayer(config.start_cash)
-    elif config.player_type == "qlearning":
-        player = QLearningPlayer(
-            alpha=config.alpha,
-            gamma= config.gamma, 
-            epsilon=config.epsilon,
-            start_cash=config.start_cash,
-            reward_strategy=config.reward_strategy,
+    player = create_player_from_type(
+        player_type=config.player_type, 
+        start_cash=config.start_cash, 
+        alpha=config.alpha, 
+        gamma=config.gamma, 
+        epsilon=config.epsilon, 
+        reward_strategy=config.reward_strategy
         )
+    
         
     # Initialize the simulation with the config and player
     st.session_state.simulation = Simulation(

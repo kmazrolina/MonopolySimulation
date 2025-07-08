@@ -1,6 +1,5 @@
 import streamlit as st
-from simualtion import SimulationConfig  # your own class
-from datetime import datetime
+from monopoly_simulation.simualtion import SimulationConfig  # your own class
 
 def render_config_form():
     # Ensure session_state keys exist
@@ -11,9 +10,9 @@ def render_config_form():
         sim_id = st.session_state.get('simulation_id', 1)
 
         sim_title = st.text_input("Simulation title", value=f"Simulation {sim_id}")
-        start_cash = st.number_input("Starting cash for a player", value=2000, step=100)
-        num_games = st.number_input("Number of games to run", value=100)
-        max_turns = st.number_input("Number of turns per game", value=250, step=1)
+        start_cash = st.number_input("Starting cash for a player", value=1000, step=100)
+        num_games = st.number_input("Number of games to run", value=1, min_value=1, max_value=1000)
+        max_turns = st.number_input("Number of turns per game", value=25, step=1)
 
         player_type = st.selectbox(
             "Player type",
@@ -38,7 +37,7 @@ Mixed: Combination of sparse and dense rewarding.""",
                 key=f"reward"
             )
 
-        game_preview = st.checkbox("Game preview", value=False, help="If checked, the game will be displayed in the dashboard the simulation. \
+        game_preview = st.checkbox("Game preview", value=True, help="If checked, the game will be displayed in the dashboard the simulation. \
             This will slow down the execution, not recommanded for running more than one simulation")
         
         saved = st.button("Save")

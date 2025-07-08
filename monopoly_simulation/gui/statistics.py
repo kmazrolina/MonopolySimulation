@@ -52,8 +52,7 @@ def update_win_loose_stats(game_stats, win_loose_rate, avg_turns_bancrupt):
     )
 
     
-def display_game_stats():
-    game_stats = st.session_state.game_stats.copy()
+def display_game_stats(game_stats=None):
 
     if game_stats.empty:
         st.info("No simulation data available.")
@@ -64,22 +63,40 @@ def display_game_stats():
 
     #  Average Turns Before Bankruptcy Chart
     if not bankruptcies.empty:
-        avg_turns = bankruptcies.groupby("Simulation Title")["Turns Played"].mean().reset_index()
-        avg_turns = avg_turns.sort_values("Turns Played", ascending=False)
+        avg_turns_lose = bankruptcies.groupby("Simulation Title")["Turns Played"].mean().reset_index()
+        avg_turns_lose = avg_turns_lose.sort_values("Turns Played", ascending=False)
 
-        fig_avg_turns = px.bar(
-            avg_turns,
+        fig_avg_turns_lose = px.bar(
+            avg_turns_lose,
             x="Simulation Title",
             y="Turns Played",
             title="Average Turns Before Bankruptcy",
             color="Simulation Title",
             color_discrete_sequence=get_random_color_seq(),
-            text=avg_turns["Turns Played"].round(1),
+            text=avg_turns_lose["Turns Played"].round(1),
             template="plotly_dark"
         )
-        fig_avg_turns.update_traces(marker_line_width=1.5, textposition="outside")
-        st.plotly_chart(fig_avg_turns, use_container_width=True)
+        fig_avg_turns_lose.update_traces(marker_line_width=1.5, textposition="outside")
+        st.plotly_chart(fig_avg_turns_lose, use_container_width=True)
 
+
+     #  Average Turns
+    
+    avg_turns = game_stats.groupby("Simulation Title")["Turns Played"].mean().reset_index()
+    avg_turns = avg_turns.sort_values("Turns Played", ascending=False)
+
+    fig_avg_turns = px.bar(
+        avg_turns,
+        x="Simulation Title",
+        y="Turns Played",
+        title="Average Turns Played",
+        color="Simulation Title",
+        color_discrete_sequence=get_random_color_seq(),
+        text=avg_turns["Turns Played"].round(1),
+        template="plotly_dark"
+    )
+    fig_avg_turns.update_traces(marker_line_width=1.5, textposition="outside")
+    st.plotly_chart(fig_avg_turns, use_container_width=True)
 
     # Wins vs Bankruptcies Chart
     win_loss_counts = game_stats.groupby(["Simulation Title", "End Game Status"]).size().reset_index(name='Count')
@@ -117,10 +134,10 @@ def display_game_stats():
 
 
 
-def display_property_revenue_stats():
+def display_property_revenue_stats(property_revenue_stats):
     
     # Revenue by Property
-    agg_prop_stats = st.session_state.property_reveue_stats.groupby(["Simulation Title", "Property Name"], as_index=False)["Revenue"].count()
+    agg_prop_stats =property_revenue_stats.groupby(["Simulation Title", "Property Name"], as_index=False)["Revenue"].count()
     agg_prop_stats = agg_prop_stats.sort_values("Property Name")
 
     fig = px.bar(
@@ -141,10 +158,10 @@ def display_property_revenue_stats():
     
     
     
-def display_cash_stats():
+def display_cash_stats(player_cash_stats):
     # Group by BOTH Simulation Title and Turn
     agg_player_cash = (
-        st.session_state.player_cash_stats
+        player_cash_stats
         .groupby(["Simulation Title", "Turn"], as_index=False)["Player Cash"]
         .mean()
     )
@@ -166,15 +183,11 @@ def display_cash_stats():
     
     return agg_player_cash
     
-def display_property_ownership():
-    # Check if data is available
-    if st.session_state.property_owned_stats.empty:
-        st.info("No property ownership outcomes recorded yet.")
-        return
+def display_property_ownership(property_owned_stats):
 
     # Group by Simulation Title and Game No to count properties owned per game
     property_counts = (
-        st.session_state.property_owned_stats
+        property_owned_stats
         .groupby(["Simulation Title", "Game No"], as_index=False)["Property Name"]
         .count()
         .rename(columns={"Property Name": "Properties Owned"})
@@ -208,12 +221,12 @@ def display_property_ownership():
 def display_cumulative_stats():
     
     # Display game stats
-    display_game_stats()
+    display_game_stats(st.session_state.game_stats.copy())
      
     # Display property stats
-    display_property_revenue_stats()
+    display_property_revenue_stats(st.session_state.property_reveue_stats.copy())
     
     # Display player cash and properoty worth stats
-    display_cash_stats()
+    display_cash_stats(st.session_state.player_cash_stats.copy())
     
-    display_property_ownership()
+    display_property_ownership(st.session_state.property_owned_stats.copy())

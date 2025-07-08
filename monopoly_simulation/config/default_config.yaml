@@ -41,7 +41,9 @@ player_type: qlearning   # Options: always_buy, never_buy, qlearning
 property_fields: 12
 property_price: 250
 property_rent: 50
+reward_strategy: mixed
 start_cash: 1000
+start_passing_cash: 200
 tax_fields: 3
 tax_amount: 75
 train_agent: true

@@ -3,16 +3,18 @@ import os
 import random
 from typing import List, Dict, Any
 from collections import deque
+import time
 
-from config import validate
-from player import AlwaysBuyPlayer, NeverBuyPlayer, QLearningPlayer, Player
-from board import Board
+from monopoly_simulation.config import validate
+from monopoly_simulation.player import Player, QLearningPlayer, create_player_from_type
+from monopoly_simulation.board import Board
+
 
 
 class SimulationConfig:
     def __init__(
         self,
-        config_path: str=os.path.join("config", "default_config.yaml")
+        config_path: str=os.path.join("monopoly_simulation", "config", "default_config.yaml")
     ):
         self.load_config(config_path)
 
@@ -36,6 +38,7 @@ class SimulationConfig:
         self.property_price=config.get("property_price", 100)
         self.property_rent=config.get("property_rent", 10)
         self.start_cash=config["start_cash"]
+        self.start_passing_cash=config.get("start_passing_cash", 200)
         self.tax_fields=config["tax_fields"]
         self.tax_amount=config.get("tax_amount", 50)
         self.train_agent=config.get("train_agent", False)
@@ -48,7 +51,8 @@ class Simulation:
         self.current_turn = 0
         self.board = Board(self.config) 
         self.player = player
-        self.turn_outcomes_queue = deque()
+        self.turn_outcomes_queue = deque() 
+        
 
     def reset(self):
         self.current_turn = 0
@@ -84,7 +88,7 @@ class Simulation:
 
 
     def run(self):
-
+    
         while self.current_turn <= self.config.max_turns:
             
             turn_outcome = {
@@ -114,19 +118,18 @@ class Simulation:
 
                     if prev_position > new_position:
                         print("Player has passed the start field, receiving cash.")
-                        self.player.receive(self.config.start_cash)
+                        self.player.receive(self.config.start_passing_cash)
 
                     
                     field = self.board.get_field(new_position)
                     print(f"Player landed on {field.field_type} field")
                     
                     if field.field_type == "Start":
-                        print("Player is on the Start field, receiving cash.")
-                        self.player.receive(self.config.start_cash)
-
+                        print("Player is on the Start field")
+                        
                         turn_outcome["event"] = "Start"
                         turn_outcome["description"] = "Received cash from Start field"
-                        turn_outcome["amount"] = self.config.start_cash
+                        turn_outcome["amount"] = self.config.start_passing_cash
                     
                     elif field.field_type == "Tax":
                         print(f"Player pays tax of {field.tax_amount}")
@@ -173,7 +176,7 @@ class Simulation:
                 except Player.Bankrupcy as e:
                     print(e)
                     
-                    if self.config.player_type == "qlearning":
+                    if isinstance(self.player, QLearningPlayer):
                         self.player.lose()
 
                     turn_outcome["end_game_status"] = "Bankrupcy"
@@ -187,7 +190,7 @@ class Simulation:
                 self.current_turn += 1
 
             else:
-                if self.config.player_type == "qlearning":
+                if isinstance(self.player, QLearningPlayer):
                     self.player.win()
                 
                 turn_outcome["end_game_status"] = "Win"
@@ -199,11 +202,11 @@ class Simulation:
 
 
 
-
 def config_and_run_multiple_simulations(
         num_simulations: int, 
         player_type: str, 
         start_cash: int,
+        max_turns: int,
         default_config_path: str=os.path.join("config", "default_config.yaml")
         ) -> List[dict]:
     
@@ -214,35 +217,33 @@ def config_and_run_multiple_simulations(
     config = SimulationConfig(default_config_path)
     config.player_type = player_type
     config.start_cash = start_cash
+    config.max_turns = max_turns
 
     
-    if config.player_type == "always_buy":
-            player = AlwaysBuyPlayer(config.start_cash) 
-    elif config.player_type == "never_buy":
-        player = NeverBuyPlayer(config.start_cash)
-    else:
-        player = QLearningPlayer(
-            alpha=0.1, 
-            gamma=0.9, 
-            epsilon=0.1, 
-            start_cash=config.start_cash,
-            train=config.train_agent
+    player = create_player_from_type(
+        player_type=config.player_type, 
+        start_cash=config.start_cash, 
+        alpha=config.alpha, 
+        gamma=config.gamma, 
+        epsilon=config.epsilon, 
+        reward_strategy=config.reward_strategy
         )
     simulation = Simulation(config, player)
     
-    results = []
-    
+
     for i in range(num_simulations):
-        print(f"Running simulation {i + 1}/{num_simulations}")
-        simulation_result= simulation.run()
-        results.append(simulation_result)
+        print(f"\n\nRunning simulation {i + 1}/{num_simulations}\n")
+        simulation.run()
         simulation.reset()
 
-    return results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run a Monopoly simulation.")
     parser.add_argument("--config_path", type=str, default=os.path.join("config", "default_config.yaml"), help="Path to the configuration file.")
+    parser.add_argument("--num_simulations", type=int, default=1, help="Number of simulations to run.")
+    parser.add_argument("--player_type", type=str, choices=["always_buy", "never_buy", "qlearning"], default="qlearning", help="Type of player to simulate.")
+    parser.add_argument("--start_cash", type=int, default=2000, help="Starting cash for the player.")
+    parser.add_argument("--max_turns", type=int, default=250, help="Maximum number of turns per game.")
     
     args = parser.parse_args()
     
@@ -250,9 +251,13 @@ if __name__ == "__main__":
     if not os.path.exists(args.config_path):
         raise FileNotFoundError(f"Configuration file '{args.config_path}' does not exist.")
     
+    start = time.time()
     config_and_run_multiple_simulations(
-        num_simulations=10000,
-        player_type="qlearning",  # optionally change to "never_buy" or "qlearning" 
-        start_cash=2000,
-        default_config_path=args.config_path
+        num_simulations=args.num_simulations,
+        player_type=args.player_type,  # optionally change to "never_buy" or "qlearning" 
+        start_cash=args.start_cash,
+        max_turns=args.max_turns,
+        default_config_path=args.config_path,
     )
+    print(f"Simulation completed in {time.time() - start:.2f} seconds.")
+    

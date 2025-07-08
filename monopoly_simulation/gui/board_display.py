@@ -1,5 +1,5 @@
 import streamlit as st
-from gui.statistics import get_owned_properties
+from monopoly_simulation.gui.statistics import get_owned_properties
 
 def generate_css_and_wrapper(inner_html, center_content=""):
     """

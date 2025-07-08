@@ -1,7 +1,7 @@
 import random
 import randomname
 
-from fields import StartField, TaxField, ChanceField, PropertyField
+from monopoly_simulation.fields import StartField, TaxField, ChanceField, PropertyField
 
 class Board:
     def __init__(self, config):
