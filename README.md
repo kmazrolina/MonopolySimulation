@@ -82,7 +82,7 @@ The player must pay a tax of **$75** immediately upon landing.
 The player collects **$200** every time they pass or land on the Start space.
 
 ### Game End Conditions
-- The game ends if:
+The game ends if:
 - The player goes **bankrupt** (cash less than zero).
 - The player completes all turns without going bancrupt.
 
@@ -92,5 +92,7 @@ The player collects **$200** every time they pass or land on the Start space.
 - QLearning - learns when to buy properties to maximize total worth and number of wins
 
 More information on the learning process [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/QLearning-Agent)
+
+Agent Evaluation Report is [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/AI-Agent-Evaluation)
 
 
