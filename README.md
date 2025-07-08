@@ -14,6 +14,7 @@ Full project documentation is available in [wiki 📖](https://github.com/kmazro
 Clone this repository:
 ```bash
 git clone https://github.com/kmazrolina/MonopolySimulation
+cd MonopolySimulation
 ```
 Install:
 ```bash
