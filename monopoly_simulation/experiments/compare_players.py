@@ -56,7 +56,7 @@ def setup_simulations(config, args):
             "Player Type": config.player_type,
             "Start Cash": config.start_cash,
             "Num Games": args.num_games,
-            "Reward Strategy": config.reward_strategy if config.player_type == "qlearning" else None,
+            "Reward Strategy": 'config.reward_strategy' if config.player_type == "qlearning" else None,
             "Alpha": config.alpha if config.player_type == "qlearning" else None,
             "Gamma": config.gamma if config.player_type == "qlearning" else None,
             "Epsilon": config.epsilon if config.player_type == "qlearning" else None,

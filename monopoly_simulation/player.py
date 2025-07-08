@@ -49,7 +49,7 @@ class QLearningPlayer(Player):
 
     def init_rewards(self):
         if self.reward_strategy == 'dense':
-            self.reward_buy_factor = 2.0
+            self.reward_buy_factor = 1
             self.reward_skip_factor = 0.5
             
             self.reward_win_factor = None
@@ -62,10 +62,10 @@ class QLearningPlayer(Player):
             self.reward_win_factor = 100
             self.punishment_lose = -1000
         else:
-            self.reward_buy_factor = 1.0
+            self.reward_buy_factor = 1
             self.reward_skip_factor = 0.5
             
-            self.reward_win_factor = 10
+            self.reward_win_factor = 100
             self.punishment_lose = -1000
             
     class State:
