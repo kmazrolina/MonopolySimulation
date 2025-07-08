@@ -11,7 +11,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Run Monopoly simulations with different starting cash amounts.")
     parser.add_argument("--player_options", type=int, nargs="+", default=["always_buy", "never_buy", "qlearning"],
                         help="Player options for the simulation (default: ['always_buy', 'never_buy', 'qlearning'])")
-    parser.add_argument("--start_cash", type=int, nargs="+", default=1000)
+    parser.add_argument("--start_cash", type=int, nargs="+", default=500)
     parser.add_argument("--num_games", type=int, default=10000,
                         help="Number of games to simulate (default: 10000)")
     parser.add_argument("--max_turns", type=int, default=250,
@@ -56,7 +56,7 @@ def setup_simulations(config, args):
             "Player Type": config.player_type,
             "Start Cash": config.start_cash,
             "Num Games": args.num_games,
-            "Reward Strategy": 'config.reward_strategy' if config.player_type == "qlearning" else None,
+            "Reward Strategy": 'mixed' if config.player_type == "qlearning" else None,
             "Alpha": config.alpha if config.player_type == "qlearning" else None,
             "Gamma": config.gamma if config.player_type == "qlearning" else None,
             "Epsilon": config.epsilon if config.player_type == "qlearning" else None,
@@ -93,6 +93,7 @@ def main():
     display_cash_stats(player_cash_df)
     display_property_revenue_stats(property_revenue_df)
     display_property_ownership(property_owned_df)
+
 
 
 if __name__ == "__main__":

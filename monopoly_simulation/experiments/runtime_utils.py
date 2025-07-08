@@ -3,6 +3,7 @@ import time
 import concurrent.futures
 import pandas as pd
 
+from monopoly_simulation.player import QLearningPlayer
 from monopoly_simulation.simualtion import Simulation, SimulationConfig
 from monopoly_simulation.experiments.stat_utils import (
     create_game_stats_df,
@@ -64,6 +65,17 @@ def process_simulation(sim, num_games):
     simulation = sim["simulation"]
     simulation_title = sim["title"]
 
+    # If QLearningPlayer is used tarin it first
+    if isinstance(simulation.player, QLearningPlayer):
+        run_multiple_simulations_with_report(
+        num_games=num_games,
+        simulation=simulation,
+        simulation_title=simulation_title,
+        )
+        simulation.player.eval_mode()
+
+        
+    
     turn_outcomes = run_multiple_simulations_with_report(
         num_games=num_games,
         simulation=simulation,
@@ -87,3 +99,5 @@ def run_and_collect_results(simulations, num_games):
             results.append(future.result())
 
     return results
+
+

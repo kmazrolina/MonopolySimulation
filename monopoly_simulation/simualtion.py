@@ -137,7 +137,7 @@ class Simulation:
 
                         turn_outcome["event"] = "Tax"
                         turn_outcome["description"] = f"Paid tax"
-                        turn_outcome["amount"] = field.tax_amount
+                        turn_outcome["amount"] = -field.tax_amount
                     
                     elif field.field_type == "Chance":
                         chance_event = field.chance_event
@@ -151,7 +151,7 @@ class Simulation:
                     elif field.field_type == "Property":
                         if not field.is_owned:
                             print(f"Player buys property {field.name} for {field.price}")
-                            bought = self.player.buy_property(field, self.config.max_turns - self.current_turn )
+                            bought = self.player.buy_property(field, self.current_turn )
 
                             if bought:
                                 field.is_owned = True  
@@ -159,7 +159,7 @@ class Simulation:
 
                                 turn_outcome["event"] = "Property Purchase"
                                 turn_outcome["description"] = field.name
-                                turn_outcome["amount"] = field.price
+                                turn_outcome["amount"] = -field.price
                             else:
                                 print(f"Player skipped buying property {field.name}")
                                 turn_outcome["event"] = "Buy Skip"
@@ -171,7 +171,7 @@ class Simulation:
 
                             turn_outcome["event"] = "Rent Payment"
                             turn_outcome["description"] = field.name
-                            turn_outcome["amount"] = field.rent
+                            turn_outcome["amount"] = -field.rent
 
                 except Player.Bankrupcy as e:
                     print(e)

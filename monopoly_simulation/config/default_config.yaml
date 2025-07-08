@@ -40,7 +40,7 @@ max_turns: 250
 player_type: qlearning   # Options: always_buy, never_buy, qlearning
 property_fields: 12
 property_price: 250
-property_rent: 50
+property_rent: 0
 reward_strategy: mixed
 start_cash: 1000
 start_passing_cash: 200
