@@ -2,6 +2,8 @@
 
 This is a Python project that simulates the classic board game Monopoly in single player version. It models player actions, property transactions, and game mechanics to analyze strategies and outcomes. 
 
+![simulation_run](pic/simulation_run.png)
+
 Full project documentation is available in [wiki 📖](https://github.com/kmazrolina/MonopolySimulation/wiki).
 
 ## Quick start
@@ -19,7 +21,11 @@ pip install -e .
 monopoly-sim
 ```
 Open http://localhost:8502/ in your browser.
+
+![config](pic/config.png)
+
 Configure simulation and run.
+
 
 
 **Running experiments**

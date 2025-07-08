@@ -14,7 +14,7 @@ def main():
     st.set_page_config(
         page_title="Monopoly Simulation",
         page_icon=":money_with_wings:",
-        
+    
     )
     st.title("Monopoly Simulation")
 
