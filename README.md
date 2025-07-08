@@ -2,7 +2,7 @@
 
 This is a Python project that simulates the classic board game Monopoly in single player version. It models player actions, property transactions, and game mechanics to analyze strategies and outcomes. 
 
-Technology stack: Python, streamlit
+Technology stack: Python, streamlit, Linux/MacOs
 
 Full project documentation is available in [wiki 📖](https://github.com/kmazrolina/MonopolySimulation/wiki).
 
