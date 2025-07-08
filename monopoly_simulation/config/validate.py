@@ -66,7 +66,7 @@ def validate_config(config_path: str) -> dict:
             raise ValueError(f"Invalid value '{event["amount"]}' in chance events, must an integer.")
 
     # Vaidate player type
-    player_type = config.get("player", "always_buy")
+    player_type = config["player_type"]
     if player_type not in ["always_buy", "qlearning", "never_buy"]:
         raise ValueError(f"Invalid player type '{player_type}'. Must be one of 'always_buy', 'qlearning', or 'never_buy'.")
 

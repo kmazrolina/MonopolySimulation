@@ -45,6 +45,7 @@ start_cash: 1000
 tax_fields: 3
 tax_amount: 75
 train_agent: true
+train_test_ratio: 0.8
 
 
 
