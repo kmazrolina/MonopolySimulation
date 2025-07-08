@@ -1,4 +1,0 @@
-,Simulation Title,Player Type,Start Cash,Num Games,Reward Strategy,Alpha,Gamma,Epsilon
-0,Player: always_buy,always_buy,1000,10000,,,,
-1,Player: never_buy,never_buy,1000,10000,,,,
-2,Player: qlearning,qlearning,1000,10000,sparse,0.1,0.9,0.1
