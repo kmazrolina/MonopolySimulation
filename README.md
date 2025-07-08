@@ -41,15 +41,15 @@ Full information about experiment results [available here](https://github.com/km
 ## Simulation Rules
 
 ### Board Setup
-- The board is a **circular track** with **20 spaces**.
-- Spaces include:
+The board is a **circular track** with **20 spaces**.
+Spaces include:
   - **1 Start space**: Players collect $200 each time they pass or land on it.
   - **12 Properties**: Each can be purchased for $250 and charges $50 rent.
   - **4 Chance spaces**: Landing here triggers a random Chance card effect.
   - **3 Tax spaces**: Landing here requires paying a fixed tax of $75.
 
 ### Starting Conditions
-- The player begins with chosen cash amount
+The player begins with chosen cash amount.
 
 ### Turn Structure
 1. The player rolls a **six-sided die** (1-6).
