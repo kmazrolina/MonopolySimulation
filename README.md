@@ -93,4 +93,6 @@ The player collects **$200** every time they pass or land on the Start space.
 
 More information on the learning process [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/QLearning-Agent)
 
+Agent Evaluation Report is [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/AI-Agent-Evaluation)
+
 
