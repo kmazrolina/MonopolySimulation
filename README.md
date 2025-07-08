@@ -2,6 +2,8 @@
 
 This is a Python project that simulates the classic board game Monopoly in single player version. It models player actions, property transactions, and game mechanics to analyze strategies and outcomes. 
 
+Technology stack: Python, streamlit
+
 Full project documentation is available in [wiki 📖](https://github.com/kmazrolina/MonopolySimulation/wiki).
 
 ![simulation run](pic/simulation_run.png)
@@ -96,3 +98,12 @@ More information on the learning process [available here](https://github.com/kma
 Agent Evaluation Report is [available here](https://github.com/kmazrolina/MonopolySimulation/wiki/AI-Agent-Evaluation)
 
 
+
+## System desing
+The Simulation.run() (see `monopoly_simulation/simulation.py`) method pushes events to a event queue which are later parsed by user interface or experiment scripts. 
+Streamlit is a sequential framework which is not ideal (or even not recommended) for dynamic simulation environments however running one simulation of this simple game is fast, morover streamlit offers simple and elegant interface design with minimal python code. 
+
+### Possible improvements
+- Replacing streamlit with async display
+- Replacing simple deque() for simulation event with messsaging solutions like Apache Kafka
+- Allowing for more options to be configured by user eg. board size - which is prepared to be scalable in backedn desing however not implemented in forntend yet
